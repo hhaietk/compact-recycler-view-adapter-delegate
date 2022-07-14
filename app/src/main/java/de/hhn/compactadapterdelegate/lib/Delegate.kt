@@ -3,7 +3,7 @@ package de.hhn.compactadapterdelegate.lib
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 
-abstract class AdapterDelegate<I>(@LayoutRes val layout: Int) {
+abstract class Delegate<I>(@LayoutRes val layout: Int) {
 
     open fun createViewHolder(parent: ViewGroup) = DelegateViewHolder(parent, layout)
 

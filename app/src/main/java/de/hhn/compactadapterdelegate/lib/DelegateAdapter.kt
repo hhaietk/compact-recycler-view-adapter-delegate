@@ -6,7 +6,7 @@ import androidx.annotation.AnyRes
 import androidx.recyclerview.widget.RecyclerView
 import java.lang.ref.WeakReference
 
-open class DelegateAdapter<I>(vararg delegate: AdapterDelegate<out I>) : RecyclerView.Adapter<DelegateViewHolder>() {
+open class DelegateAdapter<I>(vararg delegate: Delegate<out I>) : RecyclerView.Adapter<DelegateViewHolder>() {
 
     /**
      * Callback for [RecyclerView.ViewHolder.itemView.setOnClickListener].
@@ -34,7 +34,7 @@ open class DelegateAdapter<I>(vararg delegate: AdapterDelegate<out I>) : Recycle
 
     private var items = emptyList<DelegateModel<I>>()
 
-    protected val delegates = mutableListOf<AdapterDelegate<out I>>()
+    protected val delegates = mutableListOf<Delegate<out I>>()
 
     private var _recyclerView: WeakReference<RecyclerView>? = null
     var recyclerView: RecyclerView?
@@ -45,7 +45,7 @@ open class DelegateAdapter<I>(vararg delegate: AdapterDelegate<out I>) : Recycle
         delegate.forEach { addDelegate(it) }
     }
 
-    fun addDelegate(delegate: AdapterDelegate<out I>) {
+    fun addDelegate(delegate: Delegate<out I>) {
         if (delegates.firstOrNull { it.layout == delegate.layout } != null)
             throw IllegalArgumentException("Layout '${resName(delegate.layout)}' already added, each delegate needs to be unique.")
 
@@ -54,7 +54,7 @@ open class DelegateAdapter<I>(vararg delegate: AdapterDelegate<out I>) : Recycle
 
     private fun resName(@AnyRes id: Int): String = recyclerView?.resources?.getResourceEntryName(id) ?: "$id"
 
-    fun removeDelegate(delegate: AdapterDelegate<out I>) {
+    fun removeDelegate(delegate: Delegate<out I>) {
         delegates.remove(delegate)
     }
 
