@@ -3,18 +3,18 @@ package de.hhn.compactadapterdelegate.lib
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
 
-class DelegateModelDiffCallback : DiffUtil.ItemCallback<DelegateModel<*>>() {
+class DelegateModelDiffCallback<M> : DiffUtil.ItemCallback<DelegateModel<M>>() {
 
-    override fun areItemsTheSame(oldItem: DelegateModel<*>, newItem: DelegateModel<*>): Boolean {
+    override fun areItemsTheSame(oldItem: DelegateModel<M>, newItem: DelegateModel<M>): Boolean {
         return oldItem.uuid == newItem.uuid
     }
 
     @SuppressLint("DiffUtilEquals")
-    override fun areContentsTheSame(oldItem: DelegateModel<*>, newItem: DelegateModel<*>): Boolean {
+    override fun areContentsTheSame(oldItem: DelegateModel<M>, newItem: DelegateModel<M>): Boolean {
         return oldItem.model == newItem.model
     }
 
-    override fun getChangePayload(oldItem: DelegateModel<*>, newItem: DelegateModel<*>): Any? {
+    override fun getChangePayload(oldItem: DelegateModel<M>, newItem: DelegateModel<M>): Any? {
         return oldItem.changedPayload(newItem)
     }
 }
