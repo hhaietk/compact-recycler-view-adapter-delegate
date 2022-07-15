@@ -19,7 +19,7 @@ object FakeDataGenerator {
             DelegateModel(PageModel.Product("what", 99.9), R.layout.product),
             DelegateModel(PageModel.Product("no idea", 123.3), R.layout.product),
             DelegateModel(PageModel.Product("Deutsche Bank", 343.4), R.layout.product),
-            DelegateModel(PageModel.Footer("Data retrieved on 13.07."), R.layout.footer, changedPayload = { new -> (new as PageModel.Footer).text } ),
+            DelegateModel(PageModel.Footer("Data retrieved on 13.07."), R.layout.footer),
         )
     }
 }
