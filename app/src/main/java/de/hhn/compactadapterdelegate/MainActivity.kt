@@ -11,6 +11,8 @@ import de.hhn.compactadapterdelegate.delegates.FooterDelegate
 import de.hhn.compactadapterdelegate.delegates.HeaderDelegate
 import de.hhn.compactadapterdelegate.delegates.ProductDelegate
 import de.hhn.compactadapterdelegate.lib.DelegateAdapter
+import de.hhn.compactadapterdelegate.lib.DelegateListAdapter
+import de.hhn.compactadapterdelegate.lib.DelegateModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,15 +26,14 @@ class MainActivity : AppCompatActivity() {
         setUpRecyclerView()
     }
 
+    private var isReset = false
+
     private fun setUpRecyclerView() {
-        val delegateAdapter = DelegateAdapter(
+        val delegateAdapter = DelegateListAdapter(
             HeaderDelegate(),
             FooterDelegate(),
             ProductDelegate()
-        ).apply {
-            val items = FakeDataGenerator.create()
-            submitList(items)
-        }
+        )
 
         delegateAdapter.onItemClick { item, view, position -> binding?.itemClickListener?.text = "Clicked on $position" }
         delegateAdapter.onFocusChange { item, view, hasFocus, position -> binding?.itemFocusListener?.text = "item $position hasFocus $hasFocus" }
@@ -40,7 +41,21 @@ class MainActivity : AppCompatActivity() {
         binding?.products?.run {
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
             layoutManager = LinearLayoutManager(context)
-            adapter = delegateAdapter
+            adapter = delegateAdapter.apply { submitList(FakeDataGenerator.create()) }
+        }
+
+
+        binding?.shuffle?.setOnClickListener {
+            val items = if (isReset) {
+                binding?.shuffle?.text = "SHUFFLE"
+                isReset = false
+                FakeDataGenerator.create()
+            } else {
+                binding?.shuffle?.text = "RESET"
+                isReset = true
+                FakeDataGenerator.recreate()
+            }
+             delegateAdapter.submitList(items)
         }
     }
 }
