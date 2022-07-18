@@ -1,18 +1,14 @@
 package de.hhn.compactadapterdelegate
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import de.hhn.compactadapterdelegate.databinding.ActivityMainBinding
 import de.hhn.compactadapterdelegate.delegates.FooterDelegate
 import de.hhn.compactadapterdelegate.delegates.HeaderDelegate
 import de.hhn.compactadapterdelegate.delegates.ProductDelegate
-import de.hhn.compactadapterdelegate.lib.DelegateAdapter
 import de.hhn.compactadapterdelegate.lib.DelegateListAdapter
-import de.hhn.compactadapterdelegate.lib.DelegateModel
 
 class MainActivity : AppCompatActivity() {
 

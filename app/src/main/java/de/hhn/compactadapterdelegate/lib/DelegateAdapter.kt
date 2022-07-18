@@ -4,7 +4,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.AnyRes
 import androidx.recyclerview.widget.RecyclerView
-import java.lang.ref.WeakReference
 
 open class DelegateAdapter<I>(vararg delegate: Delegate<out I>) : RecyclerView.Adapter<DelegateViewHolder>() {
 
