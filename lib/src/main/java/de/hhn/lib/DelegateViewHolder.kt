@@ -1,4 +1,4 @@
-package de.hhn.compactadapterdelegate.lib
+package de.hhn.lib
 
 import android.view.LayoutInflater
 import android.view.View

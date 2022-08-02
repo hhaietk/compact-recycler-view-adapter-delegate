@@ -1,4 +1,4 @@
-package de.hhn.compactadapterdelegate.lib
+package de.hhn.lib
 
 import androidx.annotation.LayoutRes
 

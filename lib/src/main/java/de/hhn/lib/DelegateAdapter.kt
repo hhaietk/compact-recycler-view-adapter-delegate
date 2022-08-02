@@ -1,40 +1,45 @@
-package de.hhn.compactadapterdelegate.lib
+package de.hhn.lib
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.AnyRes
-import androidx.annotation.LayoutRes
-import androidx.recyclerview.widget.AsyncDifferConfig
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import java.util.concurrent.Executors
 
-class DelegateListAdapter<I>(vararg delegate: Delegate<out I>) : ListAdapter<DelegateModel<I>, DelegateViewHolder>(
-    AsyncDifferConfig
-        .Builder(DelegateModelDiffCallback<I>())
-        .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor())
-        .build()
-) {
+open class DelegateAdapter<I>(vararg delegate: Delegate<out I>) : RecyclerView.Adapter<DelegateViewHolder>() {
 
-    protected val delegates = mutableListOf<Delegate<out I>>()
-
-    init {
-        delegate.forEach { addDelegate(it) }
-    }
-
+    /**
+     * Callback for [RecyclerView.ViewHolder.itemView.setOnClickListener].
+     *
+     * @param item  Model of the adapter.
+     * @param view  View that has been clicked.
+     * @param position Adapter position of the clicked element.
+     */
     protected var onItemClick: ((item: DelegateModel<I>, view: View, position: Int) -> Unit)? = null
     fun onItemClick(block: ((item: DelegateModel<I>, view: View, position: Int) -> Unit)?) {
         onItemClick = block
     }
 
+    /**
+     * Callback for [RecyclerView.ViewHolder.itemView.setOnFocusChangeListener].
+     *
+     * @param item     Model of the adapter.
+     * @param view     View that has been clicked.
+     * @param hasFocus `True` if it is focused.
+     */
     protected var onFocusChange: ((item: DelegateModel<*>, view: View, hasFocus: Boolean, position: Int) -> Unit)? = null
     fun onFocusChange(block: ((item: DelegateModel<*>, view: View, hasFocus: Boolean, position: Int) -> Unit)?) {
         onFocusChange = block
     }
 
+    private var items = emptyList<DelegateModel<I>>()
+
+    protected val delegates = mutableListOf<Delegate<out I>>()
+
     var recyclerView by weak<RecyclerView?>()
 
-    override fun getItemCount(): Int = currentList.size
+    init {
+        delegate.forEach { addDelegate(it) }
+    }
 
     fun addDelegate(delegate: Delegate<out I>) {
         if (delegates.firstOrNull { it.layout == delegate.layout } != null)
@@ -72,8 +77,6 @@ class DelegateListAdapter<I>(vararg delegate: Delegate<out I>) : ListAdapter<Del
         delegateAtAdapterPosition(position).bindViewHolder(holder, item, null)
     }
 
-    protected fun itemAt(position: Int): DelegateModel<I> = currentList[position]
-
     override fun onBindViewHolder(
         holder: DelegateViewHolder,
         position: Int,
@@ -95,8 +98,11 @@ class DelegateListAdapter<I>(vararg delegate: Delegate<out I>) : ListAdapter<Del
     protected fun delegateAtAdapterPosition(position: Int) =
         delegates.first { it.layout == getItemViewType(position) }
 
-    @LayoutRes
-    override fun getItemViewType(position: Int): Int = getItem(position).layout
+    override fun getItemViewType(position: Int) = itemAt(position).layout
+
+    protected fun itemAt(position: Int) = items[position]
+
+    override fun getItemCount() = items.size
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
@@ -131,4 +137,10 @@ class DelegateListAdapter<I>(vararg delegate: Delegate<out I>) : ListAdapter<Del
         super.onViewDetachedFromWindow(holder)
         holder.onViewDetachedFromWindow()
     }
+
+    fun submitList(newItems: List<DelegateModel<I>>) {
+        items = newItems
+        notifyDataSetChanged()
+    }
+
 }

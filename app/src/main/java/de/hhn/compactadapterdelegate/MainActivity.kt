@@ -8,7 +8,7 @@ import de.hhn.compactadapterdelegate.databinding.ActivityMainBinding
 import de.hhn.compactadapterdelegate.delegates.FooterDelegate
 import de.hhn.compactadapterdelegate.delegates.HeaderDelegate
 import de.hhn.compactadapterdelegate.delegates.ProductDelegate
-import de.hhn.compactadapterdelegate.lib.DelegateListAdapter
+import de.hhn.lib.DelegateListAdapter
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,6 +1,6 @@
 package de.hhn.compactadapterdelegate
 
-import de.hhn.compactadapterdelegate.lib.DelegateModel
+import de.hhn.lib.DelegateModel
 
 object FakeDataGenerator {
 
@@ -23,7 +23,7 @@ object FakeDataGenerator {
         )
     }
 
-    fun recreate(): List<DelegateModel<PageModel>> {
+    fun recreate(): List<de.hhn.lib.DelegateModel<PageModel>> {
         return listOf(
             DelegateModel(PageModel.Header("---Product List---"), R.layout.header),
             DelegateModel(PageModel.Product("Vivid", 123.3), R.layout.product),

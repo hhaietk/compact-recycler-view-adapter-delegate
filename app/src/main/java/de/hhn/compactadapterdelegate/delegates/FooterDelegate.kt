@@ -3,9 +3,9 @@ package de.hhn.compactadapterdelegate.delegates
 import de.hhn.compactadapterdelegate.PageModel
 import de.hhn.compactadapterdelegate.R
 import de.hhn.compactadapterdelegate.databinding.FooterBinding
-import de.hhn.compactadapterdelegate.lib.Delegate
-import de.hhn.compactadapterdelegate.lib.DelegateModel
-import de.hhn.compactadapterdelegate.lib.DelegateViewHolder
+import de.hhn.lib.Delegate
+import de.hhn.lib.DelegateModel
+import de.hhn.lib.DelegateViewHolder
 
 class FooterDelegate : Delegate<PageModel.Footer>(R.layout.footer) {
 
