@@ -48,7 +48,7 @@ val items = listOf(
     DelegateModel(PageModel.Product("N26", 99.9), R.layout.product),
 )
 
-adapter.submitList(items)
+delegateAdapter.submitList(items)
 ```
 
 4. Add click listener to adapter
@@ -66,5 +66,5 @@ delegateAdapter.onFocusChange { item, view, hasFocus, position -> binding?.itemF
 #### Updating items
 
 ```kotlin
-adapter.submitList(newItems)
+delegateAdapter.submitList(newItems)
 ```
